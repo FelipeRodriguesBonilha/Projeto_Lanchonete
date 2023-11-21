@@ -1,0 +1,46 @@
+﻿@model IEnumerable<KF_Lanches.Models.ItemPedido>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    float soma = 0.0f;
+}
+
+<h1>Pedido Realizado com Sucesso! Agora é só aguardar...</h1>
+<br />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Produto
+            </th>
+            <th>
+                Quantidade
+            </th>
+            <th>
+                Valor
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.consumivel.descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.quantidade)
+            </td>
+            <td>R$@item.QtdValor()</td>
+        </tr>
+        soma += item.QtdValor();
+}
+    <tr class="text-primary">
+        <th>TOTAL</th>
+        <td></td>
+        <td>R$@soma</td>
+    </tr>
+    </tbody>
+</table>
+
+<a asp-controller="Consumiveis" asp-action="Index"><button class="btn btn-outline-primary"><i class="bi bi-bag-fill"></i> Continuar Comprando</button></a>

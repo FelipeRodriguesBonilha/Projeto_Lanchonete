@@ -1,0 +1,114 @@
+﻿@model IEnumerable<KF_Lanches.Models.Consumivel>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+
+    <style>
+        html,
+        body {
+            position: relative;
+            height: 100%;
+        }
+
+        body {
+            background: rgb(0, 0, 0, 0);
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
+
+        swiper-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 650px;
+            object-fit: fill;
+        }
+    </style>
+</head>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<h1>Consumiveis</h1>*@
+
+@*<p>
+    <a asp-action="Create">Create New</a>
+</p>*@
+
+<swiper-container class="mySwiper" pagination="true" pagination-clickable="true" navigation="true" space-between="30" centered-slides="true" autoplay-delay="2500" autoplay-disable-on-interaction="false">
+    <swiper-slide><img src="https://d3ugyf2ht6aenh.cloudfront.net/stores/124/083/products/promocao-la-casa-de-papel-preco-alterado-v21-ed0d609b1d6b9db13e16558383049644-640-0.jpg"/> </swiper-slide>
+    <swiper-slide><img src="https://uploads.metropoles.com/wp-content/uploads/2022/05/03124339/hamburguer-8.jpg"/></swiper-slide>
+    <swiper-slide><img src="https://content.news.ifood.com.br/uploads/2023/05/ifn-capa-hamb.webp"/></swiper-slide>
+</swiper-container>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+
+<br/>
+<br/>
+
+<form asp-controller="Pesquisa" asp-action="Buscar">
+    <div class="input-group mb-3" style="max-width: 400px;">
+        <input type="text" class="form-control" name="filtro" placeholder="Busque pelo item" aria-label="Recipient's username" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <button class="btn btn-outline-primary" type="submit"><i class="bi bi-search"></i> Buscar</button>
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.categoria)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.valor)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.categoria.id)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.valor)
+            </td>
+            <td>
+                    <a asp-controller="Carrinho" asp-action="AdicionarAoCarrinho" asp-route-id="@item.id"><button class="btn btn-outline-primary"><i class="bi bi-bag-fill"></i> Comprar</button></a>
+                    <a asp-controller="Consumiveis" asp-action="Details" asp-route-id="@item.id"><button class="btn btn-outline-info"><i class="bi bi-info-circle-fill"></i> Detalhes</button></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

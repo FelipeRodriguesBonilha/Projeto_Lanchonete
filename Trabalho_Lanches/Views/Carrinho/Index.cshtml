@@ -1,0 +1,74 @@
+﻿@model IEnumerable<KF_Lanches.Models.ItemPedido>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    float soma = 0.0f;
+}
+
+<h1>Carrinho de Compras <i class="bi bi-cart-fill text-black"></i></h1>
+
+@*<p>
+    <a asp-action="Create">Create New</a>
+</p>*@
+
+@if (@ViewBag.CartItemCount != 0)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr class="table table-default">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><a asp-controller="Carrinho" asp-action="LimparCarrinho"><button class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i> Limpar Carrinho</button></a></td>
+            </tr>
+            <tr>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.consumivel)*@
+                    Produto
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.quantidade)*@
+                    Quantidade
+                </th>
+                <th>Valor</th>
+                <th>Excluir Item</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.consumivel.descricao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.quantidade)
+                    </td>
+                    <td>
+                        R$@item.QtdValor()
+                    </td>
+                    <td>
+                        <a asp-controller="Carrinho" asp-action="RemoverDoCarrinho" asp-route-id="@item.id"><i class="bi bi-x-circle text-danger"></i></a>
+                    </td>
+                </tr>
+                soma += item.QtdValor();
+            }
+            <tr class="text-primary">
+                <th>TOTAL</th>
+                <td></td>
+                <td>R$@soma</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+} else
+{
+    <p>Não há itens no carrinho! Experimente incluir algo.</p>
+}
+
+<a asp-controller="Consumiveis" asp-action="Index"><button class="btn btn-outline-primary"><i class="bi bi-bag-fill"></i> Continuar Comprando</button></a>
+@if (@ViewBag.CartItemCount != 0)
+{
+    <a asp-controller="Pedidos" asp-action="Create"><button class="btn btn-outline-success"><i class="bi bi-bag-check-fill"></i> Finalizar Pedido</button></a>
+}

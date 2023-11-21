@@ -1,0 +1,59 @@
+﻿@using KF_Lanches.Models;
+@model IEnumerable<KF_Lanches.Models.Pedido>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Pedidos</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Data do pedido
+            </th>
+            <th>
+                Nome do cliente
+            </th>
+            <th>
+                CPF do cliente
+            </th>
+            <th>
+                Endereço do Cliente
+            </th>
+            <th>
+                Telefone do cliente
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataPedido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cpf)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.endereco)
+                </td>
+                <td>
+                    <a href="https://wa.me/@item.telefone"><img src="https://pngimg.com/d/whatsapp_PNG95149.png" style="width:20px; height: 20px;"></a>
+                    @Html.DisplayFor(modelItem => item.telefone)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
